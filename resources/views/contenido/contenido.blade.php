@@ -202,5 +202,6 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- Fin del modal Eliminar -->
+    <example-component></example-component>
 </main>
 @endsection
