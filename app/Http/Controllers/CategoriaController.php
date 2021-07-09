@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
@@ -13,7 +14,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::all();
+        return $categorias;
+        //return 'hola mundo';
     }
 
     /**
@@ -34,7 +37,11 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria = new Categoria();
+        $categoria->nombre = $request->nombre;
+        $categoria->descripcion = $request->descripcion;
+        $categoria->condicion = 1;
+        $categoria->save();
     }
 
     /**
@@ -66,9 +73,13 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $categoria = Categoria::findOrFail($request->id);
+        $categoria->nombre = $request->nombre;
+        $categoria->descripcion = $request->descripcion;
+        $categoria->condicion = 1;
+        $categoria->save();
     }
 
     /**
@@ -80,5 +91,34 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+     /**
+     * Activa  una categoria
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activar(Request $request)
+    {
+        $categoria = Categoria::findOrFail($request->id);
+        $categoria->condicion = 1;
+        $categoria->save();
+    }
+
+     /**
+     * Desactiva  una categoria
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function desactivar(Request $request)
+    {
+        $categoria = Categoria::findOrFail($request->id);
+        $categoria->condicion = 0;
+        $categoria->save();
     }
 }
