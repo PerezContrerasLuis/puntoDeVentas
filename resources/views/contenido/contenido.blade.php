@@ -4,7 +4,7 @@
         <example-component></example-component>
     </template>
     <template v-if="menu == 1">
-        <h1>1</h1>
+    <categoria></categoria>
     </template>
     <template v-if="menu == 2">
         <h1>2</h1>
