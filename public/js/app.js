@@ -2016,7 +2016,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       tituloModal: '',
       tipoAccion: 0,
       errorCategoria: 0,
-      errorMsgCategoria: []
+      errorMsgCategoria: [],
+      categoriaID: 0
     };
   },
   methods: {
@@ -2052,7 +2053,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
 
               case 'actualizar':
                 {
-                  console.info("Method to sow modal window update");
+                  this.modal = 1;
+                  this.tituloModal = "Actualizar categoria";
+                  this.nombre = data['nombre'];
+                  this.descripcion = data['descripcion'];
+                  this.tipoAccion = 2;
+                  this.categoriaID = data['id'];
+                  break;
                 }
             }
           }
@@ -2082,6 +2089,25 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         me.listarCategoria();
       })["catch"](function (error) {
         console.log("ERROR al registrar categoria");
+        console.log(error);
+      });
+    },
+    actualizarCategoria: function actualizarCategoria() {
+      if (this.validarCategoria()) {
+        return;
+      }
+
+      var me = this;
+      axios.put('/categoria/actualizar', {
+        'nombre': me.nombre,
+        'descripcion': me.descripcion,
+        'id': me.categoriaID
+      }).then(function (response) {
+        console.log(response);
+        me.cerrarModal();
+        me.listarCategoria();
+      })["catch"](function (error) {
+        console.log("ERROR al Actualizar categoria");
         console.log(error);
       });
     },
@@ -3460,7 +3486,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-primary",
-                        attrs: { type: "button" }
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.actualizarCategoria()
+                          }
+                        }
                       },
                       [_vm._v("Actualizar")]
                     )

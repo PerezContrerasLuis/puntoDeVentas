@@ -123,7 +123,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
                     <button type="button" v-if="tipoAccion == 1"  class="btn btn-primary" @click="registrarCategoria()">Guardar</button>
-                    <button type="button" v-if="tipoAccion == 2"  class="btn btn-primary">Actualizar</button>
+                    <button type="button" v-if="tipoAccion == 2"  class="btn btn-primary" @click="actualizarCategoria()" >Actualizar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -169,8 +169,8 @@
                 tituloModal : '',
                 tipoAccion : 0,
                 errorCategoria : 0,
-                errorMsgCategoria : []
-
+                errorMsgCategoria : [],
+                categoriaID : 0
             }
         },
         methods : {
@@ -208,7 +208,13 @@
                                     }
                                 case 'actualizar' :
                                     {
-                                        console.info("Method to sow modal window update");
+                                        this.modal = 1;
+                                        this.tituloModal = "Actualizar categoria";
+                                        this.nombre = data['nombre'];
+                                        this.descripcion = data['descripcion'];
+                                        this.tipoAccion = 2;
+                                        this.categoriaID = data['id'];
+                                        break;
                                     }
 
                             }
@@ -239,6 +245,26 @@
                 })
                 .catch(function (error) {
                     console.log("ERROR al registrar categoria");
+                    console.log(error);
+                });
+            },
+            actualizarCategoria(){
+                if(this.validarCategoria()){
+                    return;
+                }
+                let me = this;
+                axios.put('/categoria/actualizar', {
+                    'nombre' : me.nombre,
+                    'descripcion' : me.descripcion,
+                    'id' : me.categoriaID
+                })
+                .then(function (response) {
+                    console.log(response);
+                    me.cerrarModal();
+                    me.listarCategoria();
+                })
+                .catch(function (error) {
+                    console.log("ERROR al Actualizar categoria");
                     console.log(error);
                 });
             },
