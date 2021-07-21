@@ -115,7 +115,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
-                    <button type="button" v-if="tipoAccion == 1"  class="btn btn-primary">Guardar</button>
+                    <button type="button" v-if="tipoAccion == 1"  class="btn btn-primary" @click="registrarCategoria()">Guardar</button>
                     <button type="button" v-if="tipoAccion == 2"  class="btn btn-primary">Actualizar</button>
                 </div>
             </div>
@@ -211,6 +211,24 @@
                 this.tituloModal = '';
                 this.nombre = '';
                 this.descripcion = '';
+            },
+            registrarCategoria(){
+                console.log("Hola Registrando categoria");
+                let me = this;
+                axios.post('/categoria/registrar', {
+                    'nombre' : me.nombre,
+                    'descripcion' : me.descripcion
+                })
+                .then(function (response) {
+                    console.log("respuesta de registrar categoria");
+                    console.log(response);
+                    me.cerrarModal();
+                    me.listarCategoria();
+                })
+                .catch(function (error) {
+                    console.log("ERROR al registrar categoria");
+                    console.log(error);
+                });
             }
         },
         mounted() {

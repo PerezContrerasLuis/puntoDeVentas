@@ -2054,6 +2054,22 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       this.tituloModal = '';
       this.nombre = '';
       this.descripcion = '';
+    },
+    registrarCategoria: function registrarCategoria() {
+      console.log("Hola Registrando categoria");
+      var me = this;
+      axios.post('/categoria/registrar', {
+        'nombre': me.nombre,
+        'descripcion': me.descripcion
+      }).then(function (response) {
+        console.log("respuesta de registrar categoria");
+        console.log(response);
+        me.cerrarModal();
+        me.listarCategoria();
+      })["catch"](function (error) {
+        console.log("ERROR al registrar categoria");
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
@@ -3374,7 +3390,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-primary",
-                        attrs: { type: "button" }
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.registrarCategoria()
+                          }
+                        }
                       },
                       [_vm._v("Guardar")]
                     )
