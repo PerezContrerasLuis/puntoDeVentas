@@ -1997,6 +1997,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").default;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2007,7 +2014,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       arrayCategorias: [],
       modal: 0,
       tituloModal: '',
-      tipoAccion: 0
+      tipoAccion: 0,
+      errorCategoria: 0,
+      errorMsgCategoria: []
     };
   },
   methods: {
@@ -2057,6 +2066,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
     },
     registrarCategoria: function registrarCategoria() {
       console.log("Hola Registrando categoria");
+
+      if (this.validarCategoria()) {
+        return;
+      }
+
       var me = this;
       axios.post('/categoria/registrar', {
         'nombre': me.nombre,
@@ -2070,6 +2084,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         console.log("ERROR al registrar categoria");
         console.log(error);
       });
+    },
+    validarCategoria: function validarCategoria() {
+      this.errorCategoria = 0;
+      this.errorMsgCategoria = [];
+
+      if (!this.nombre) {
+        this.errorMsgCategoria.push("EL NOMBRE DE LA CATEGORIA ES OBLIGATORIO");
+        this.errorCategoria = 1;
+        console.log("Nombre categoria vacio");
+      }
+
+      return this.errorCategoria;
     }
   },
   mounted: function mounted() {
@@ -2362,7 +2388,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content{\n\twidth : 100% !important;\n\tPosition : absolute !important;\n}\n.mostrar {\n\tdisplay : list-item !important;\n\topacity : 1 !important;\n\tPosition : absolute !important;\n\tbackground-color: #3c29297a !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content{\n\twidth : 100% !important;\n\tPosition : absolute !important;\n}\n.mostrar {\n\tdisplay : list-item !important;\n\topacity : 1 !important;\n\tPosition : absolute !important;\n\tbackground-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3365,7 +3391,35 @@ var render = function() {
                           }
                         })
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorCategoria,
+                            expression: "errorCategoria"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMsgCategoria, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          }),
+                          0
+                        )
+                      ]
+                    )
                   ]
                 )
               ]),

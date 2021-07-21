@@ -111,6 +111,13 @@
                                 <input type="email" v-model="descripcion" class="form-control" placeholder="Enter Email">
                             </div>
                         </div>
+                        <div class="form-group row div-error" v-show="errorCategoria" >
+                            <div class="text-center text-error">
+                                <div v-for="error in errorMsgCategoria" :key="error" v-text="error">
+
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -160,7 +167,9 @@
                 arrayCategorias: [],
                 modal : 0,
                 tituloModal : '',
-                tipoAccion : 0 
+                tipoAccion : 0,
+                errorCategoria : 0,
+                errorMsgCategoria : []
 
             }
         },
@@ -214,6 +223,9 @@
             },
             registrarCategoria(){
                 console.log("Hola Registrando categoria");
+                if(this.validarCategoria()){
+                    return;
+                }
                 let me = this;
                 axios.post('/categoria/registrar', {
                     'nombre' : me.nombre,
@@ -229,6 +241,18 @@
                     console.log("ERROR al registrar categoria");
                     console.log(error);
                 });
+            },
+            validarCategoria(){
+                this.errorCategoria = 0;
+                this.errorMsgCategoria = [];
+
+                if(!this.nombre){
+                    this.errorMsgCategoria.push("EL NOMBRE DE LA CATEGORIA ES OBLIGATORIO");
+                    this.errorCategoria = 1;
+                    console.log("Nombre categoria vacio");
+                } 
+                return this.errorCategoria;
+
             }
         },
         mounted() {
@@ -247,5 +271,13 @@
 	opacity : 1 !important;
 	Position : absolute !important;
 	background-color: #3c29297a !important;
+}
+.div-error{
+    display: flex;
+    justify-content: center;
+}
+.text-error{
+    color: red !important;
+    font-weight: bold;
 }
 </style>
