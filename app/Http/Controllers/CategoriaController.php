@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use Illuminate\Support\Facades\DB;
+
 
 class CategoriaController extends Controller
 {
@@ -14,9 +16,20 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return $categorias;
-        //return 'hola mundo';
+        // $categorias = Categoria::all();
+        $categorias = Categoria::paginate(2);
+        // return $categorias;
+        return [
+            'pagination' => [
+                'total' => $categorias->total(),
+                'current_page' => $categorias->currentPage(),
+                'per_page' => $categorias->perPage(),
+                'last_page' => $categorias->lastPage(),
+                'from' => $categorias->firstItem(),
+                'to' => $categorias->lastItem(),
+            ],
+            'categorias' => $categorias
+        ];
     }
 
     /**
