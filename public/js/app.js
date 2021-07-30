@@ -2002,7 +2002,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         'from': 0,
         'to': 0
       },
-      offset: 3
+      offset: 3,
+      criterio: 'nombre',
+      buscar: ''
     };
   },
   computed: {
@@ -2037,9 +2039,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
     }
   },
   methods: {
-    listarCategoria: function listarCategoria(page) {
+    listarCategoria: function listarCategoria(page, buscar, criterio) {
       var me = this;
-      var url = '/categoria?page=' + page;
+      var url = '/categoria?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayCategorias = respuesta.categorias.data;
@@ -2054,10 +2056,10 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       }).then(function () {// always executed
       });
     },
-    cambiarPagina: function cambiarPagina(page) {
+    cambiarPagina: function cambiarPagina(page, buscar, criterio) {
       var me = this;
       me.pagination.current_page = page;
-      me.listarCategoria(page);
+      me.listarCategoria(page, buscar, criterio);
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -2112,7 +2114,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         console.log("respuesta de registrar categoria");
         console.log(response);
         me.cerrarModal();
-        me.listarCategoria();
+        me.listarCategoria('1', '', 'nombre');
       })["catch"](function (error) {
         console.log("ERROR al registrar categoria");
         console.log(error);
@@ -2131,7 +2133,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       }).then(function (response) {
         console.log(response);
         me.cerrarModal();
-        me.listarCategoria();
+        me.listarCategoria('1', '', 'nombre');
       })["catch"](function (error) {
         console.log("ERROR al Actualizar categoria");
         console.log(error);
@@ -2160,7 +2162,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
           axios.put('/categoria/desactivar', {
             'id': id
           }).then(function (response) {
-            me.listarCategoria();
+            me.listarCategoria('1', '', 'nombre');
           })["catch"](function (error) {
             console.log("ERROR al Actualizar categoria");
             console.log(error);
@@ -2196,7 +2198,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
           axios.put('/categoria/activar', {
             'id': id
           }).then(function (response) {
-            me.listarCategoria();
+            me.listarCategoria('1', '', 'nombre');
           })["catch"](function (error) {
             console.log("ERROR al Actualizar categoria");
             console.log(error);
@@ -2224,7 +2226,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
   },
   mounted: function mounted() {
     console.log('Component mounted Example.');
-    this.listarCategoria();
+    this.listarCategoria('1', this.buscar, this.criterio);
   }
 });
 
@@ -3313,13 +3315,101 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _vm._m(1),
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.criterio,
+                        expression: "criterio"
+                      }
+                    ],
+                    staticClass: "form-control col-md-3",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.criterio = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "nombre" } }, [
+                      _vm._v("Nombre")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "descripcion" } }, [
+                      _vm._v("Descripción")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.buscar,
+                      expression: "buscar"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Texto a buscar" },
+                  domProps: { value: _vm.buscar },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.listarCategoria(1, _vm.buscar, _vm.criterio)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.buscar = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        return _vm.listarCategoria(1, _vm.buscar, _vm.criterio)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-search" }), _vm._v(" Buscar")]
+                )
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "table",
             { staticClass: "table table-bordered table-striped table-sm" },
             [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -3427,7 +3517,9 @@ var render = function() {
                             click: function($event) {
                               $event.preventDefault()
                               return _vm.cambiarPagina(
-                                _vm.pagination.current_page - 1
+                                _vm.pagination.current_page - 1,
+                                _vm.buscar,
+                                _vm.criterio
                               )
                             }
                           }
@@ -3453,7 +3545,11 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.cambiarPagina(page)
+                            return _vm.cambiarPagina(
+                              page,
+                              _vm.buscar,
+                              _vm.criterio
+                            )
                           }
                         }
                       })
@@ -3472,7 +3568,9 @@ var render = function() {
                             click: function($event) {
                               $event.preventDefault()
                               return _vm.cambiarPagina(
-                                _vm.pagination.current_page + 1
+                                _vm.pagination.current_page + 1,
+                                _vm.buscar,
+                                _vm.criterio
                               )
                             }
                           }
@@ -3724,47 +3822,6 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Dashboard")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c(
-            "select",
-            {
-              staticClass: "form-control col-md-3",
-              attrs: { id: "opcion", name: "opcion" }
-            },
-            [
-              _c("option", { attrs: { value: "nombre" } }, [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "descripcion" } }, [
-                _vm._v("Descripción")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              id: "texto",
-              name: "texto",
-              placeholder: "Texto a buscar"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_c("i", { staticClass: "fa fa-search" }), _vm._v(" Buscar")]
-          )
-        ])
-      ])
     ])
   },
   function() {

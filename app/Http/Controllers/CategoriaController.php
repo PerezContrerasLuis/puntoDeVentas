@@ -14,10 +14,19 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {   
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+
+        if($buscar == ''){
+            $categorias = Categoria::orderBy('id','desc')->paginate(2);
+        }else{
+            $categorias = Categoria::where($criterio,'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(2);
+        }
+
         // $categorias = Categoria::all();
-        $categorias = Categoria::paginate(2);
+        //$categorias = Categoria::paginate(2);
         // return $categorias;
         return [
             'pagination' => [
