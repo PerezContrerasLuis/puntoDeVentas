@@ -23,3 +23,9 @@ Route::post('/categoria/registrar','App\Http\Controllers\CategoriaController@sto
 Route::put('/categoria/actualizar','App\Http\Controllers\CategoriaController@update');
 Route::put('/categoria/activar','App\Http\Controllers\CategoriaController@activar');
 Route::put('/categoria/desactivar','App\Http\Controllers\CategoriaController@desactivar');
+
+Route::get('/articulo','App\Http\Controllers\ArticuloController@index');
+Route::post('/articulo/registrar','App\Http\Controllers\ArticuloController@store');
+Route::put('/articulo/actualizar','App\Http\Controllers\ArticuloController@update');
+Route::put('/articulo/activar','App\Http\Controllers\ArticuloController@activar');
+Route::put('/articulo/desactivar','App\Http\Controllers\ArticuloController@desactivar');
