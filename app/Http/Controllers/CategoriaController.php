@@ -143,4 +143,11 @@ class CategoriaController extends Controller
         $categoria->condicion = 0;
         $categoria->save();
     }
+
+    public function selectCategoria(Request $request){
+        //if(!$request->ajax()){return redirect('/');} 
+        $categorias = Categoria::where('condicion','=','1')
+        ->select('id','nombre')->orderBy('nombre','asc')->get();
+        return ['categorias' => $categorias];
+    }
 }

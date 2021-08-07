@@ -103,21 +103,49 @@
                 <div class="modal-body">
                     <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
+                            <label class="col-md-3 form-control-label" for="text-input">Categoria</label>
+                            <div class="col-md-9">
+                                <select class="form-control"  v-model="idCategoria">
+                                    <option value="0" disable> Seleccione </option>
+                                    <option v-for="categoria in arrayCategorias" :key="categoria.id" :value="categoria.id" v-text="categoria.nombre"></option>
+                                </select>     
+                                <span class="help-block">(*) seleccione el nombre de la categoría</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="text-input">Codigo</label>
+                            <div class="col-md-9">
+                                <input type="text" v-model="codigo" class="form-control" placeholder="Codigo de barras">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="text-input">Nombre Articulo</label>
                             <div class="col-md-9">
                                 <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de categoría">
                                 <span class="help-block">(*) Ingrese el nombre de la categoría</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                            <label class="col-md-3 form-control-label" for="text-input">Precio de Venta</label>
                             <div class="col-md-9">
-                                <input type="email" v-model="descripcion" class="form-control" placeholder="Enter Email">
+                            <input type="number" v-model="precio_venta" class="form-control" placeholder="">
                             </div>
                         </div>
-                        <div class="form-group row div-error" v-show="errorCategoria" >
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="text-input">Stock</label>
+                            <div class="col-md-9">
+                            <input type="number" v-model="stock" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
+                            <div class="col-md-9">
+                                <input type="email" v-model="descripcion" class="form-control" placeholder="Ingrese Descripcion">
+                            </div>
+                        </div>
+                        <div class="form-group row div-error" v-show="errorArticulo" >
                             <div class="text-center text-error">
-                                <div v-for="error in errorMsgCategoria" :key="error" v-text="error">
+                                <div v-for="error in errorMsgArticulo" :key="error" v-text="error">
 
                                 </div>
                             </div>
@@ -168,7 +196,8 @@
                 },
                 offset : 3,
                 criterio : 'nombre',
-                buscar : ''
+                buscar : '',
+                arrayCategorias: []
             }
         },
         computed:{
@@ -213,6 +242,19 @@
                     // always executed
                 });
             },
+            selectCategoria(){
+                let me = this;
+                var url = '/categoria/selectCategoria';
+                axios.get(url).then(function (response) {
+                     var respuesta = response.data;
+                    me.arrayCategorias = respuesta.categorias;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                });
+            },
             cambiarPagina(page,buscar,criterio){
                 let me = this;
                 me.pagination.current_page = page;
@@ -221,13 +263,13 @@
             abrirModal(modelo, accion, data =[]){
                 console.log("method openModal EJECUTE");
                 switch(modelo){
-                    case 'categoria':
+                    case 'articulo':
                         {
                             switch(accion){
                                 case 'registrar' :
                                     {
                                         this.modal = 1;
-                                        this.tituloModal = 'Registrar categoria';
+                                        this.tituloModal = 'Registrar articulo';
                                         this.descripcion = '';
                                         this.nombre = '';
                                         this.tipoAccion = 1;
@@ -237,7 +279,7 @@
                                 case 'actualizar' :
                                     {
                                         this.modal = 1;
-                                        this.tituloModal = "Actualizar categoria";
+                                        this.tituloModal = "Actualizar articulo";
                                         this.nombre = data['nombre'];
                                         this.descripcion = data['descripcion'];
                                         this.tipoAccion = 2;
@@ -248,6 +290,7 @@
                             }
                         }
                 }
+                this.selectCategoria();
             },
             cerrarModal(){
                 this.modal = 0;
