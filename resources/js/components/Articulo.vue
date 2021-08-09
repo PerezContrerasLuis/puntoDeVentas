@@ -337,20 +337,24 @@
                     console.log(error);
                 });
             },
-            actualizarCategoria(){
-                if(this.validarCategoria()){
+            actualizarArticulo(){
+                if(this.validarArticulo()){
                     return;
                 }
                 let me = this;
-                axios.put('/categoria/actualizar', {
+                axios.put('/articulo/actualizar', {
+                    'id' : this.articulo_id,
+                    'idcategoria' : this.idCategoria,
+                    'codigo' : this.codigo,
                     'nombre' : me.nombre,
-                    'descripcion' : me.descripcion,
-                    'id' : me.categoriaID
+                    'stock': this.stock,
+                    'precio_venta' : this.precio_venta,
+                    'descripcion' : me.descripcion
                 })
                 .then(function (response) {
                     console.log(response);
                     me.cerrarModal();
-                    me.listarCategoria('1','','nombre');
+                    me.listarArticulo('1','','nombre');
                 })
                 .catch(function (error) {
                     console.log("ERROR al Actualizar categoria");
