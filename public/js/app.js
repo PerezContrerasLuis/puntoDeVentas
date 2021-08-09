@@ -2119,9 +2119,14 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
                 {
                   this.modal = 1;
                   this.tituloModal = 'Registrar articulo';
+                  this.idCategoria = 0;
+                  this.nombre_categoria = '';
+                  this.codigo = '';
+                  this.precio_venta = 0;
                   this.descripcion = '';
                   this.nombre = '';
                   this.tipoAccion = 1;
+                  this.stock = 0;
                   break;
                 }
 
@@ -2132,7 +2137,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
                   this.nombre = data['nombre'];
                   this.descripcion = data['descripcion'];
                   this.tipoAccion = 2;
-                  this.categoriaID = data['id'];
+                  this.articulo_id = data['id'];
+                  this.idCategoria = data['idCategoria'];
+                  this.codigo = data['codigo'];
+                  this.stock = data['stock'];
+                  this.precio_venta = data['precio_venta'];
                   break;
                 }
             }
@@ -2144,25 +2153,33 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
     cerrarModal: function cerrarModal() {
       this.modal = 0;
       this.tituloModal = '';
+      this.idCategoria = 0;
+      this.nombre_categoria = '';
+      this.codigo = '';
       this.nombre = '';
+      this.precio_venta = '';
+      this.stock = 0;
       this.descripcion = '';
+      this.errorArticulo = '';
     },
-    registrarCategoria: function registrarCategoria() {
-      console.log("Hola Registrando categoria");
-
-      if (this.validarCategoria()) {
+    registrarArticulo: function registrarArticulo() {
+      if (this.validarArticulo()) {
         return;
       }
 
       var me = this;
-      axios.post('/categoria/registrar', {
+      axios.post('/articulo/registrar', {
+        'idcategoria': this.idCategoria,
+        'codigo': this.codigo,
         'nombre': me.nombre,
+        'stock': this.stock,
+        'precio_venta': this.precio_venta,
         'descripcion': me.descripcion
       }).then(function (response) {
         console.log("respuesta de registrar categoria");
         console.log(response);
         me.cerrarModal();
-        me.listarCategoria('1', '', 'nombre');
+        me.listarArticulo('1', '', 'nombre');
       })["catch"](function (error) {
         console.log("ERROR al registrar categoria");
         console.log(error);
@@ -2259,17 +2276,31 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         }
       });
     },
-    validarCategoria: function validarCategoria() {
-      this.errorCategoria = 0;
-      this.errorMsgCategoria = [];
+    validarArticulo: function validarArticulo() {
+      this.errorArticulo = 0;
+      this.errorMsgArticulo = [];
 
       if (!this.nombre) {
-        this.errorMsgCategoria.push("EL NOMBRE DE LA CATEGORIA ES OBLIGATORIO");
-        this.errorCategoria = 1;
-        console.log("Nombre categoria vacio");
+        this.errorMsgArticulo.push("EL NOMBRE DEL ARTICULO ES OBLIGATORIO");
+        this.errorArticulo = 1;
       }
 
-      return this.errorCategoria;
+      if (this.idCategoria == 0) {
+        this.errorMsgArticulo.push("SELECCIONE UNA CATEGORIA");
+        this.errorArticulo = 1;
+      }
+
+      if (!this.stock) {
+        this.errorMsgArticulo.push("EL STOCK TIENE QUE SER UN NUMERO POSITIVO ENTERO");
+        this.errorArticulo = 1;
+      }
+
+      if (!this.precio_venta) {
+        this.errorMsgArticulo.push("EL PRECIO DEL ARTICULO ES OBLIGATORIO   ");
+        this.errorArticulo = 1;
+      }
+
+      return this.errorArticulo;
     }
   },
   mounted: function mounted() {
@@ -4560,7 +4591,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.registrarCategoria()
+                            return _vm.registrarArticulo()
                           }
                         }
                       },
@@ -4576,7 +4607,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.actualizarCategoria()
+                            return _vm.actualizarArticulo()
                           }
                         }
                       },
