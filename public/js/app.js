@@ -2208,7 +2208,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         console.log(error);
       });
     },
-    desactivarCategoria: function desactivarCategoria(id) {
+    desactivarArticulo: function desactivarArticulo(id) {
       var _this = this;
 
       var swalWithBootstrapButtons = Swal.mixin({
@@ -2219,7 +2219,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Està seguro de querer desactivar la categoria?',
+        title: 'Està seguro de querer desactivar el articulo?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'SI, desactivar!',
@@ -2228,15 +2228,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       }).then(function (result) {
         if (result.isConfirmed) {
           var me = _this;
-          axios.put('/categoria/desactivar', {
+          axios.put('/articulo/desactivar', {
             'id': id
           }).then(function (response) {
-            me.listarCategoria('1', '', 'nombre');
+            me.listarArticulo('1', '', 'nombre');
           })["catch"](function (error) {
-            console.log("ERROR al Actualizar categoria");
+            console.log("ERROR al Actualizar articulo");
             console.log(error);
           });
-          swalWithBootstrapButtons.fire('Desactivado!', 'la categoria fue desactivada con exito.', 'success');
+          swalWithBootstrapButtons.fire('Desactivado!', 'El articulo fue desactivado con exito.', 'success');
         } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel) {
@@ -2244,7 +2244,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         }
       });
     },
-    activarCategoria: function activarCategoria(id) {
+    activarArticulo: function activarArticulo(id) {
       var _this2 = this;
 
       var swalWithBootstrapButtons = Swal.mixin({
@@ -2255,7 +2255,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
-        title: 'Està seguro de querer activar la categoria?',
+        title: 'Està seguro de querer activar el articulo?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'SI, activar!',
@@ -2264,15 +2264,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       }).then(function (result) {
         if (result.isConfirmed) {
           var me = _this2;
-          axios.put('/categoria/activar', {
+          axios.put('/articulo/activar', {
             'id': id
           }).then(function (response) {
-            me.listarCategoria('1', '', 'nombre');
+            me.listarArticulo('1', '', 'nombre');
           })["catch"](function (error) {
-            console.log("ERROR al Actualizar categoria");
+            console.log("ERROR al Actualizar el Ariculo");
             console.log(error);
           });
-          swalWithBootstrapButtons.fire('Activado!', 'la categoria fue activada con exito.', 'success');
+          swalWithBootstrapButtons.fire('Activado!', 'El articulo fue activado con exito.', 'success');
         } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel) {
@@ -4068,9 +4068,7 @@ var render = function() {
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
-                                      return _vm.desactivarCategoria(
-                                        articulo.id
-                                      )
+                                      return _vm.desactivarArticulo(articulo.id)
                                     }
                                   }
                                 },
@@ -4085,7 +4083,7 @@ var render = function() {
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
-                                      return _vm.activarCategoria(articulo.id)
+                                      return _vm.activarArticulo(articulo.id)
                                     }
                                   }
                                 },

@@ -46,12 +46,12 @@
                                     <i class="icon-pencil"></i>
                                 </button> &nbsp;
                                 <template v-if="articulo.condicion">
-                                    <button type="button" class="btn btn-danger btn-sm" @click="desactivarCategoria(articulo.id)" >
+                                    <button type="button" class="btn btn-danger btn-sm" @click="desactivarArticulo(articulo.id)" >
                                         <i class="icon-trash"></i>
                                     </button>
                                 </template>
                                  <template v-else>
-                                    <button type="button" class="btn btn-info btn-sm" @click="activarCategoria(articulo.id)" >
+                                    <button type="button" class="btn btn-info btn-sm" @click="activarArticulo(articulo.id)" >
                                         <i class="icon-check"></i>
                                     </button>
                                 </template>
@@ -357,11 +357,11 @@
                     me.listarArticulo('1','','nombre');
                 })
                 .catch(function (error) {
-                    console.log("ERROR al Actualizar categoria");
+                    console.log("ERROR al Actualizar articulo");
                     console.log(error);
                 });
             },
-            desactivarCategoria(id){
+            desactivarArticulo(id){
                 const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -371,7 +371,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Està seguro de querer desactivar la categoria?',
+                title: 'Està seguro de querer desactivar el articulo?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'SI, desactivar!',
@@ -380,19 +380,19 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     let me = this;
-                    axios.put('/categoria/desactivar', {
+                    axios.put('/articulo/desactivar', {
                         'id' : id
                     })
                     .then(function (response) {
-                        me.listarCategoria('1','','nombre');
+                        me.listarArticulo('1','','nombre');
                     })
                     .catch(function (error) {
-                        console.log("ERROR al Actualizar categoria");
+                        console.log("ERROR al Actualizar articulo");
                         console.log(error);
                     });
                     swalWithBootstrapButtons.fire(
                     'Desactivado!',
-                    'la categoria fue desactivada con exito.',
+                    'El articulo fue desactivado con exito.',
                     'success'
                     )
                 } else if (
@@ -407,7 +407,7 @@
                 }
                 })
             },
-            activarCategoria(id){
+            activarArticulo(id){
                 const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -417,7 +417,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Està seguro de querer activar la categoria?',
+                title: 'Està seguro de querer activar el articulo?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'SI, activar!',
@@ -426,19 +426,19 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     let me = this;
-                    axios.put('/categoria/activar', {
+                    axios.put('/articulo/activar', {
                         'id' : id
                     })
                     .then(function (response) {
-                        me.listarCategoria('1','','nombre');
+                        me.listarArticulo('1','','nombre');
                     })
                     .catch(function (error) {
-                        console.log("ERROR al Actualizar categoria");
+                        console.log("ERROR al Actualizar el Ariculo");
                         console.log(error);
                     });
                     swalWithBootstrapButtons.fire(
                     'Activado!',
-                    'la categoria fue activada con exito.',
+                    'El articulo fue activado con exito.',
                     'success'
                     )
                 } else if (
