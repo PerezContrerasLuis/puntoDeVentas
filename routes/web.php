@@ -30,3 +30,7 @@ Route::post('/articulo/registrar','App\Http\Controllers\ArticuloController@store
 Route::put('/articulo/actualizar','App\Http\Controllers\ArticuloController@update');
 Route::put('/articulo/activar','App\Http\Controllers\ArticuloController@activar');
 Route::put('/articulo/desactivar','App\Http\Controllers\ArticuloController@desactivar');
+
+Route::get('/cliente','App\Http\Controllers\ClienteController@index');
+Route::post('/cliente/registrar','App\Http\Controllers\ClienteController@store');
+Route::put('/cliente/actualizar','App\Http\Controllers\ClienteController@update');
