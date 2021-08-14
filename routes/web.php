@@ -34,3 +34,7 @@ Route::put('/articulo/desactivar','App\Http\Controllers\ArticuloController@desac
 Route::get('/cliente','App\Http\Controllers\ClienteController@index');
 Route::post('/cliente/registrar','App\Http\Controllers\ClienteController@store');
 Route::put('/cliente/actualizar','App\Http\Controllers\ClienteController@update');
+
+Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
+Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
+Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');

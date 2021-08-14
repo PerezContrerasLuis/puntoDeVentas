@@ -9,4 +9,8 @@ class Persona extends Model
 {
     use HasFactory;
     protected $fillable = ['nombre','tipo_documento','num_documento','direccion','telefono','email'];
+
+    public function proveedor(){
+        return $this->hasMany('App\Proveedor');
+    }
 }
