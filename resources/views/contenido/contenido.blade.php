@@ -13,7 +13,7 @@
         <h1>3</h1>
     </template>
     <template v-if="menu == 4">
-        <h1>4</h1>
+        <proveedor></proveedor>
     </template>
     <template v-if="menu == 5">
         <h1>5</h1>
