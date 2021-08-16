@@ -38,3 +38,5 @@ Route::put('/cliente/actualizar','App\Http\Controllers\ClienteController@update'
 Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
 Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
 Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+
+Route::get('/rol','App\Http\Controllers\RolController@index');
