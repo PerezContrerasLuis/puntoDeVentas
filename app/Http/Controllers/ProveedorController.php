@@ -21,7 +21,7 @@ class ProveedorController extends Controller
         } else {
             $personas = Proveedor::join('personas','proveedores.id','=','personas.id')
             ->select('personas.id','personas.nombre','personas.tipo_documento','personas.num_documento','personas.direccion','personas.telefono','personas.email','proveedores.contacto','proveedores.telefono_contacto')
-            ->where('personas'.$criterio, 'like', '%' . $buscar . '%')->orderBy('personas.id', 'desc')->paginate(2);
+            ->where('personas.'.$criterio, 'like', '%' . $buscar . '%')->orderBy('personas.id', 'desc')->paginate(2);
         }
 
         return [
