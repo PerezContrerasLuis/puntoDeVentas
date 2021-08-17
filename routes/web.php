@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 //use App\Http\Controllers\CategoriaController;
 
 /*
@@ -47,3 +48,6 @@ Route::post('/user/registrar','App\Http\Controllers\UserController@store');
 Route::put('/user/actualizar','App\Http\Controllers\UserController@update');
 Route::put('/user/activar','App\Http\Controllers\UserController@activar');
 Route::put('/user/desactivar','App\Http\Controllers\UserController@desactivar');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
