@@ -40,6 +40,7 @@ Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@sto
 Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
 
 Route::get('/rol','App\Http\Controllers\RolController@index');
+Route::get('/rol/selectRol','App\Http\Controllers\RolController@selectRol');
 
 Route::get('/user','App\Http\Controllers\UserController@index');
 Route::post('/user/registrar','App\Http\Controllers\UserController@store');

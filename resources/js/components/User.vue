@@ -133,15 +133,24 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Contacto</label>
+                            <label class="col-md-3 form-control-label" for="text-input">Roles</label>
                             <div class="col-md-9">
-                                <input type="text" v-model="contacto" class="form-control" placeholder="Contacto">
+                                <select class="form-control"  v-model="idrol">
+                                    <option value="0">Seleccione un Rol </option>
+                                    <option v-for="rol in arrayRol" :key="rol.id" :value="rol.id" v-text="rol.nombre" ></option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Telefono de contacto</label>
+                            <label class="col-md-3 form-control-label" for="text-input">Usuario (*)</label>
                             <div class="col-md-9">
-                                <input type="text" v-model="telefono_contacto" class="form-control" placeholder="Telefono de contacto">
+                                <input type="text" v-model="usuario" class="form-control" placeholder="Nombre de usuario">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="text-input">Password (*)</label>
+                            <div class="col-md-9">
+                                <input type="password" v-model="password" class="form-control" placeholder="password">
                             </div>
                         </div>
                         <div class="form-group row div-error" v-show="errorPersona" >
@@ -184,6 +193,7 @@
                 idrol : 0,
                 descripcion : '',
                 arrayPersonas: [],
+                arrayRol : [],
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -234,17 +244,26 @@
             listarPersona(page,buscar,criterio){
                 let me = this;
                 var url = '/user?page='+page+'&buscar='+buscar+'&criterio='+criterio;
-                 console.log("============================================================ ");
-                    console.log(buscar);
-                    console.log(criterio);
-                    console.log("============================================================ ");
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayPersonas = respuesta.personas.data;
                     me.pagination = respuesta.pagination;
-                    console.log("============================================================ ");
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            },
+            selectRol(){
+                let me = this;
+                var url = '/rol/selectRol';
+                axios.get(url).then(function (response) {
                     console.log(response);
-                    console.log("============================================================ ");
+                    var respuesta = response.data;
+                    me.arrayRol = respuesta.roles;
                 })
                 .catch(function (error) {
                     // handle error
@@ -260,7 +279,7 @@
                 me.listarPersona(page,buscar,criterio);
             },
             abrirModal(modelo, accion, data =[]){
-                console.log("method openModal EJECUTE");
+                this.selectRol();
                 switch(modelo){
                     case 'persona':
                         {
@@ -268,7 +287,7 @@
                                 case 'registrar' :
                                     {
                                         this.modal = 1;
-                                        this.tituloModal = 'Registrar Proveedor';
+                                        this.tituloModal = 'Registrar Usuario';
                                         this.descripcion = '';
                                         this.nombre = '';
                                         this.descripcion = '';
@@ -277,17 +296,17 @@
                                         this.direccion  = '';
                                         this.telefono = '';
                                         this.email = '';
-                                        this.errorMsgPersona = 0;
+                                        this.usuario = '';
                                         this.tipoAccion = 1;
-                                        this.contacto = '';
-                                        this.telefono_contacto = '';
+                                        this.password = '';
+                                        this.idrol = 0;
                                         break ;
 
                                     }
                                 case 'actualizar' :
                                     {
                                         this.modal = 1;
-                                        this.tituloModal = "Actualizar Proveedor";
+                                        this.tituloModal = "Actualizar Usuario";
                                         this.nombre = data['nombre'];
                                         this.tipoAccion = 2;
                                         this.persona_id = data['id'];
@@ -296,8 +315,9 @@
                                         this.direccion  = data['direccion'];
                                         this.telefono = data['telefono'];
                                         this.email = data['email'];
-                                        this.contacto = data['contacto'];
-                                        this.telefono_contacto = data['telefono_contacto'];
+                                        this.usuario = data['usuario'];
+                                        this.password = data['password'];
+                                        this.idrol = data['idrol'];
                                         break;
                                     }
 
@@ -316,8 +336,9 @@
                 this.telefono = '';
                 this.email = '';
                 this.errorMsgPersona = 0;
-                this.contacto = '';
-                this.telefono_contacto = '';
+                this.usuario = '';
+                this.password = '';
+                this.idrol = 0;
             },
             registrarPersona(){
                 console.log("Hola Registrando proveedor");
