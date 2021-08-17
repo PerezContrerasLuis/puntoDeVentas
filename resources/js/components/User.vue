@@ -341,20 +341,20 @@
                 this.idrol = 0;
             },
             registrarPersona(){
-                console.log("Hola Registrando proveedor");
                 if(this.validarPersona()){
                     return;
                 }
                 let me = this;
-                axios.post('/proveedor/registrar', {
+                axios.post('/user/registrar', {
                     'nombre' : me.nombre,
                     'tipo_documento' :this.tipo_documento,
                     'num_documento' : this.num_documento,
                     'direccion' : this.direccion,
                     'telefono' : this.telefono,
                     'email' : this.email,
-                    'contacto' : this.contacto,
-                    'telefono_contacto' : this.telefono_contacto
+                    'usuario' : this.usuario,
+                    'password' : this.password,
+                    'idrol' : this.idrol
                 })
                 .then(function (response) {
                     me.cerrarModal();
@@ -370,14 +370,17 @@
                     return;
                 }
                 let me = this;
-                axios.put('/cliente/actualizar', {
+                axios.put('/user/actualizar', {
                     'nombre' : me.nombre,
                     'tipo_documento' :this.tipo_documento,
                     'num_documento' : this.num_documento,
                     'direccion' : this.direccion,
                     'telefono' : this.telefono,
                     'email' : this.email,
-                    'id' : this.persona_id
+                    'id' : this.persona_id,
+                    'usuario' : this.usuario,
+                    'password' : this.password,
+                    'idrol' : this.idrol
                 })
                 .then(function (response) {
                     console.log(response);
