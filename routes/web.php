@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
+Route::get('/main', function () {
     return view('contenido/contenido');
-});
+})->name('main');
 
 Route::get('/categoria','App\Http\Controllers\CategoriaController@index');
 Route::post('/categoria/registrar','App\Http\Controllers\CategoriaController@store');
@@ -48,6 +48,9 @@ Route::post('/user/registrar','App\Http\Controllers\UserController@store');
 Route::put('/user/actualizar','App\Http\Controllers\UserController@update');
 Route::put('/user/activar','App\Http\Controllers\UserController@activar');
 Route::put('/user/desactivar','App\Http\Controllers\UserController@desactivar');
-Auth::routes();
 
+//Auth::routes();
+Route::get('/','App\Http\Controllers\Auth\LoginController@showLoginForm');
+Route::post('/login','App\Http\Controllers\Auth\LoginController@login')->name('login');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
