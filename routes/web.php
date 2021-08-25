@@ -19,38 +19,79 @@ Route::get('/main', function () {
     return view('contenido/contenido');
 })->name('main');
 
-Route::get('/categoria','App\Http\Controllers\CategoriaController@index');
-Route::post('/categoria/registrar','App\Http\Controllers\CategoriaController@store');
-Route::put('/categoria/actualizar','App\Http\Controllers\CategoriaController@update');
-Route::put('/categoria/activar','App\Http\Controllers\CategoriaController@activar');
-Route::put('/categoria/desactivar','App\Http\Controllers\CategoriaController@desactivar');
-Route::get('/categoria/selectCategoria','App\Http\Controllers\CategoriaController@selectCategoria');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/','App\Http\Controllers\Auth\LoginController@showLoginForm');
+    Route::post('/login','App\Http\Controllers\Auth\LoginController@login')->name('login');
+});
 
-Route::get('/articulo','App\Http\Controllers\ArticuloController@index');
-Route::post('/articulo/registrar','App\Http\Controllers\ArticuloController@store');
-Route::put('/articulo/actualizar','App\Http\Controllers\ArticuloController@update');
-Route::put('/articulo/activar','App\Http\Controllers\ArticuloController@activar');
-Route::put('/articulo/desactivar','App\Http\Controllers\ArticuloController@desactivar');
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/cliente','App\Http\Controllers\ClienteController@index');
-Route::post('/cliente/registrar','App\Http\Controllers\ClienteController@store');
-Route::put('/cliente/actualizar','App\Http\Controllers\ClienteController@update');
+    Route::middleware(['Almacenista'])->group(function(){
+        Route::get('/categoria','App\Http\Controllers\CategoriaController@index');
+        Route::post('/categoria/registrar','App\Http\Controllers\CategoriaController@store');
+        Route::put('/categoria/actualizar','App\Http\Controllers\CategoriaController@update');
+        Route::put('/categoria/activar','App\Http\Controllers\CategoriaController@activar');
+        Route::put('/categoria/desactivar','App\Http\Controllers\CategoriaController@desactivar');
+        Route::get('/categoria/selectCategoria','App\Http\Controllers\CategoriaController@selectCategoria');
 
-Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
-Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
-Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+        Route::get('/articulo','App\Http\Controllers\ArticuloController@index');
+        Route::post('/articulo/registrar','App\Http\Controllers\ArticuloController@store');
+        Route::put('/articulo/actualizar','App\Http\Controllers\ArticuloController@update');
+        Route::put('/articulo/activar','App\Http\Controllers\ArticuloController@activar');
+        Route::put('/articulo/desactivar','App\Http\Controllers\ArticuloController@desactivar');
 
-Route::get('/rol','App\Http\Controllers\RolController@index');
-Route::get('/rol/selectRol','App\Http\Controllers\RolController@selectRol');
+        Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
+        Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
+        Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+    });
 
-Route::get('/user','App\Http\Controllers\UserController@index');
-Route::post('/user/registrar','App\Http\Controllers\UserController@store');
-Route::put('/user/actualizar','App\Http\Controllers\UserController@update');
-Route::put('/user/activar','App\Http\Controllers\UserController@activar');
-Route::put('/user/desactivar','App\Http\Controllers\UserController@desactivar');
+    Route::middleware(['Vendedor'])->group(function(){
+        Route::get('/cliente','App\Http\Controllers\ClienteController@index');
+        Route::post('/cliente/registrar','App\Http\Controllers\ClienteController@store');
+        Route::put('/cliente/actualizar','App\Http\Controllers\ClienteController@update');
+    });
+    
+    Route::middleware(['Administrador'])->group(function(){
+        Route::get('/categoria','App\Http\Controllers\CategoriaController@index');
+        Route::post('/categoria/registrar','App\Http\Controllers\CategoriaController@store');
+        Route::put('/categoria/actualizar','App\Http\Controllers\CategoriaController@update');
+        Route::put('/categoria/activar','App\Http\Controllers\CategoriaController@activar');
+        Route::put('/categoria/desactivar','App\Http\Controllers\CategoriaController@desactivar');
+        Route::get('/categoria/selectCategoria','App\Http\Controllers\CategoriaController@selectCategoria');
+
+        Route::get('/articulo','App\Http\Controllers\ArticuloController@index');
+        Route::post('/articulo/registrar','App\Http\Controllers\ArticuloController@store');
+        Route::put('/articulo/actualizar','App\Http\Controllers\ArticuloController@update');
+        Route::put('/articulo/activar','App\Http\Controllers\ArticuloController@activar');
+        Route::put('/articulo/desactivar','App\Http\Controllers\ArticuloController@desactivar');
+
+        Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
+        Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
+        Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+
+        Route::get('/cliente','App\Http\Controllers\ClienteController@index');
+        Route::post('/cliente/registrar','App\Http\Controllers\ClienteController@store');
+        Route::put('/cliente/actualizar','App\Http\Controllers\ClienteController@update');
+
+        Route::get('/rol','App\Http\Controllers\RolController@index');
+        Route::get('/rol/selectRol','App\Http\Controllers\RolController@selectRol');
+    
+        Route::get('/user','App\Http\Controllers\UserController@index');
+        Route::post('/user/registrar','App\Http\Controllers\UserController@store');
+        Route::put('/user/actualizar','App\Http\Controllers\UserController@update');
+        Route::put('/user/activar','App\Http\Controllers\UserController@activar');
+        Route::put('/user/desactivar','App\Http\Controllers\UserController@desactivar');
+
+    });
+   
+
+    
+
+   
+});
+
+
 
 //Auth::routes();
-Route::get('/','App\Http\Controllers\Auth\LoginController@showLoginForm');
-Route::post('/login','App\Http\Controllers\Auth\LoginController@login')->name('login');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
