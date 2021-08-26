@@ -26,6 +26,8 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::post('/logout','App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
     Route::middleware(['Almacenista'])->group(function(){
         Route::get('/categoria','App\Http\Controllers\CategoriaController@index');
         Route::post('/categoria/registrar','App\Http\Controllers\CategoriaController@store');
