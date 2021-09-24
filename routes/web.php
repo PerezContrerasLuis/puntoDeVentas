@@ -45,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
         Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
         Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+        
+        Route::get('/ingreso','App\Http\Controllers\ingresoController@index');
+        Route::post('/ingreso/registrar','App\Http\Controllers\ingresoController@store');
+        Route::put('/ingreso/actualizar','App\Http\Controllers\ingresoController@desactivar');
     });
 
     Route::middleware(['Vendedor'])->group(function(){
@@ -83,6 +87,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/user/actualizar','App\Http\Controllers\UserController@update');
         Route::put('/user/activar','App\Http\Controllers\UserController@activar');
         Route::put('/user/desactivar','App\Http\Controllers\UserController@desactivar');
+
+        Route::get('/ingreso','App\Http\Controllers\ingresoController@index');
+        Route::post('/ingreso/registrar','App\Http\Controllers\ingresoController@store');
+        Route::put('/ingreso/actualizar','App\Http\Controllers\ingresoController@desactivar');
 
     });
    
