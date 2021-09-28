@@ -19,13 +19,13 @@ class IngresoController extends Controller
             $ingresos = Ingreso::join('personas','ingresos.idproveedor','=','personas.id')
             ->join('users','ingresos.idusuario','=','users.id')
             ->select('ingresos.id','ingresos.tipo_comprobante','ingresos.serie_comprobante','ingresos.num_comprobante',
-                    'ingresos.fecha_hora','ingresos.impuestos','ingresos.total','ingresos.estado','personas.nombre','users.usuario')
+                    'ingresos.fecha_hora','ingresos.impuesto','ingresos.total','ingresos.estado','personas.nombre','users.usuario')
             ->orderBy('ingresos.id','desc')->paginate(2);
         } else {
             $ingresos = Ingreso::join('personas','ingresos.idproveedor','=','personas.id')
             ->join('users','ingresos.idusuario','=','users.id')
             ->select('ingresos.id','ingresos.tipo_comprobante','ingresos.serie_comprobante','ingresos.num_comprobante',
-                    'ingresos.fecha_hora','ingresos.impuestos','ingresos.total','ingresos.estado','personas.nombre','users.usuario')
+                    'ingresos.fecha_hora','ingresos.impuesto','ingresos.total','ingresos.estado','personas.nombre','users.usuario')
             ->where('ingresos.'.$criterio, 'like', '%' . $buscar . '%')->orderBy('ingresos.id', 'desc')->paginate(2);
         }
 
