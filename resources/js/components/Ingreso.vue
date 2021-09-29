@@ -85,11 +85,126 @@
                     </ul>
                 </nav>
             </div>
+            <div class="card-body">
+                <div class="form-group row border">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="">Proveedor</label>
+                            <select name="" id="" class="form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="">Impuesto</label>
+                        <input type="text" class="form-control" v-model="impuesto">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Tipo Comprobante</label>
+                            <select name="" id="" class="form-control" v-model="tipo_comprobante">
+                                <option value="0">Seleccione</option>
+                                <option value="BOLETA">Boleta</option>
+                                <option value="FACTURA">Factura</option>
+                                <option value="TICKET">Ticket</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Serie Comprobante</label>
+                            <input type="text" name="" id="" class="form-control" v-model="serie_comprobante">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Numero Comprobante</label>
+                            <input type="text" class="form-control" v-model="num_comprobante">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row border">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Artículo</label>
+                            <div class="form-inline">
+                                <input type="text" class="form-control" v-model="idarticulo" placeholder="Ingrese Articulo">
+                                <button class="btn btn-primary">...</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Precio</label>
+                            <input type="text" value="0" step="any" class="form-control" v-model="precio">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Cantidad</label>
+                            <input type="number" value="0" class="form-control" v-model="cantidad">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <button class="btn btn-success form-control btnagregar"><i class="icon-plus"></i> </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group row border">
+                    <div class="table-responsive col-md-12">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Opciones</th>
+                                    <th>Articulo</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm">
+                                            <i class="icon-close"></i>
+                                        </button>
+                                    </td>
+                                    <td>Articulo test</td>
+                                    <td>
+                                        <input type="number" value="2" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="number" value="3" class="form-control">
+                                    </td>
+                                    <td> 6.00</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm">
+                                            <i class="icon-close"></i>
+                                        </button>
+                                    </td>
+                                    <td>Articulo test</td>
+                                    <td>
+                                        <input type="number" value="2" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="number" value="3" class="form-control">
+                                    </td>
+                                    <td> 6.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Fin ejemplo de tabla Listado -->
     </div>
     <!--Inicio del modal agregar/actualizar-->
-    <!-- <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" :class="{'mostrar':modal}"  aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" :class="{'mostrar':modal}"  aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-primary modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,77 +214,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de la persona">
-                                <span class="help-block">(*) Ingrese el nombre de la persona</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Tipo documento</label>
-                            <div class="col-md-9">
-                                <select  v-model="tipo_documento" class="form-control">
-                                    <option value="DNI">DNI</option>
-                                    <option value="Pasaporte">Pasaporte</option>
-                                    <option value="Credencial">Credencial</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Numero Documento</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="num_documento" class="form-control" placeholder="Numero del documento">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Direccion</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="direccion" class="form-control" placeholder="Direccion">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Telefono</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="telefono" class="form-control" placeholder="Nombre de la persona">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Email</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="email" class="form-control" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Roles</label>
-                            <div class="col-md-9">
-                                <select class="form-control"  v-model="idrol">
-                                    <option value="0">Seleccione un Rol </option>
-                                    <option v-for="rol in arrayRol" :key="rol.id" :value="rol.id" v-text="rol.nombre" ></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Usuario (*)</label>
-                            <div class="col-md-9">
-                                <input type="text" v-model="usuario" class="form-control" placeholder="Nombre de usuario">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 form-control-label" for="text-input">Password (*)</label>
-                            <div class="col-md-9">
-                                <input type="password" v-model="password" class="form-control" placeholder="password">
-                            </div>
-                        </div>
-                        <div class="form-group row div-error" v-show="errorPersona" >
-                            <div class="text-center text-error">
-                                <div v-for="error in errorMsgPersona" :key="error" v-text="error">
-
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="cerrarModal()">Cerrar</button>
@@ -178,7 +223,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <!--Fin del modal-->
 </main>
 </template>
@@ -191,7 +236,7 @@
                 ingreso_id : '',
                 idproveedor : 0,
                 nombre : '',
-                tipo_comprobante : 'Boleta',
+                tipo_comprobante : 'BOLETA',
                 serie_comprobante : '',
                 num_comprobante : '',
                 impuesto: '0.16',
@@ -524,5 +569,10 @@
 .text-error{
     color: red !important;
     font-weight: bold;
+}
+@media(min-width: 600px){
+    .btnagregar{
+        margin-top: 2rem;
+    }
 }
 </style>
