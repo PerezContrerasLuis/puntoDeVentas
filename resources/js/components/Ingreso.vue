@@ -11,10 +11,11 @@
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-align-justify"></i> Listado de Ingresos
-                <button type="button" class="btn btn-secondary"  @click="abrirModal('ingreso','registrar')">
+                <button type="button" class="btn btn-secondary"  @click="mostrarDetalle()">
                     <i class="icon-plus"></i>&nbsp;Nuevo
                 </button>
             </div>
+            <template v-if="listado">
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-md-6">
@@ -85,6 +86,8 @@
                     </ul>
                 </nav>
             </div>
+            </template>
+            <template v-else>
             <div class="card-body">
                 <div class="form-group row border">
                     <div class="col-md-9">
@@ -195,11 +198,30 @@
                                     </td>
                                     <td> 6.00</td>
                                 </tr>
+                                <tr>
+                                    <td colspan="4" align="right"><strong>Total parcial</strong></td>
+                                    <td> 1 </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" align="right"><strong>Total Impuesto</strong></td>
+                                    <td> 2 </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" align="right"><strong>Total neto</strong></td>
+                                    <td> 3 </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-secondary" @click="ocultarDetalle()"> Cerrrar</button>
+                        <button type="button" class="btn btn-primary" @click="registrarIngreso()"> Registrar compra</button>
+                    </div>
+                </div>
             </div>
+            </template>
         </div>
         <!-- Fin ejemplo de tabla Listado -->
     </div>
@@ -243,7 +265,7 @@
                 total : '',
                 arrayIngreso : '',
                 arrayDetalle : '',
-               
+                listado : 1,
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 0,
@@ -374,6 +396,12 @@
                             }
                         }
                 }
+            },
+            mostrarDetalle(){
+                this.listado = 0;
+            },
+            ocultarDetalle(){
+                this.listado = 1;
             },
             cerrarModal(){
                 this.modal = 0;
