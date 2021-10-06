@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
         Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
         Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+        Route::get('/proveedor/selectProveedor','App\Http\Controllers\ProveedorController@selectProveedor');
         
         Route::get('/ingreso','App\Http\Controllers\ingresoController@index');
         Route::post('/ingreso/registrar','App\Http\Controllers\ingresoController@store');
@@ -74,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/proveedor','App\Http\Controllers\ProveedorController@index');
         Route::post('/proveedor/registrar','App\Http\Controllers\ProveedorController@store');
         Route::put('/proveedor/actualizar','App\Http\Controllers\ProveedorController@update');
+        Route::get('/proveedor/selectProveedor','App\Http\Controllers\ProveedorController@selectProveedor');
+
 
         Route::get('/cliente','App\Http\Controllers\ClienteController@index');
         Route::post('/cliente/registrar','App\Http\Controllers\ClienteController@store');

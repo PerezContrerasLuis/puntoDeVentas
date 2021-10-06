@@ -1,4 +1,6 @@
+
 <template>
+
    <main class="main">
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
@@ -93,9 +95,14 @@
                     <div class="col-md-9">
                         <div class="form-group">
                             <label for="">Proveedor</label>
-                            <select name="" id="" class="form-control">
-
-                            </select>
+                            <v-select 
+                                @search="selectProveedor"
+                                label="nombre"
+                                :options="arrayProveedor"
+                                placeholder="Buscar Proveedor"
+                                @input="getDatosProveedor"
+                                >
+                            </v-select>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -251,7 +258,14 @@
 </template>
 
 <script>
+import 'vue-select/dist/vue-select.css';
+import vSelect from 'vue-select'
+
+//Vue.component('v-select', vSelect)
+//const vSelect = require('vue-select').default;
     const axios = require('axios').default;
+    //const vSelect = require('vue-select').default;
+    
     export default {
         data (){
             return {
@@ -264,6 +278,7 @@
                 impuesto: '0.16',
                 total : '',
                 arrayIngreso : '',
+                arrayProveedor : [],
                 arrayDetalle : '',
                 listado : 1,
                 modal : 0,
@@ -285,7 +300,13 @@
                 buscar : '',
                 contacto : '',
                 telefono_contacto : '',
+                idarticulo: '',
+                precio : '',
+                cantidad : ''
             }
+        },
+        components:{
+            vSelect
         },
         computed:{
             isActived : function(){
@@ -329,13 +350,16 @@
                     // always executed
                 });
             },
-            selectRol(){
+            selectProveedor(search,loading){ 
                 let me = this;
-                var url = '/rol/selectRol';
+                loading(true);
+                var url = '/proveedor/selectProveedor?filtro='+search;
                 axios.get(url).then(function (response) {
-                    console.log(response);
+                    
                     var respuesta = response.data;
-                    me.arrayRol = respuesta.roles;
+                    //q:search
+                    me.arrayProveedor = respuesta.proveedores;
+                    loading(false)
                 })
                 .catch(function (error) {
                     // handle error
@@ -344,6 +368,11 @@
                 .then(function () {
                     // always executed
                 });
+            },
+            getDatosProveedor(val1){ 
+                let me  = this;
+                me.loading = true;
+                me.idproveedor = val1.id;
             },
             cambiarPagina(page,buscar,criterio){
                 let me = this;
