@@ -158,7 +158,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <button class="btn btn-success form-control btnagregar"><i class="icon-plus"></i> </button>
+                            <button @click="agregarDetalle()" class="btn btn-success form-control btnagregar"><i class="icon-plus"></i> </button>
                         </div>
                     </div>
                     
@@ -189,7 +189,7 @@
                                     <td>
                                         <input v-model="detalle.cantidad" type="number" value="3" class="form-control">
                                     </td>
-                                    <td> {{deatalle.precio * detalle.cantidad}}</td>
+                                    <td> {{detalle.precio * detalle.cantidad}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="right"><strong>Total parcial</strong></td>
@@ -268,7 +268,7 @@ import vSelect from 'vue-select'
                 total : '',
                 arrayIngreso : '',
                 arrayProveedor : [],
-                arrayDetalle : '',
+                arrayDetalle : [],
                 listado : 1,
                 modal : 0,
                 tituloModal : '',
@@ -387,6 +387,15 @@ import vSelect from 'vue-select'
                 let me = this;
                 me.pagination.current_page = page;
                 me.listarIngreso(page,buscar,criterio);
+            },
+            agregarDetalle(){
+                let me = this;
+                me.arrayDetalle.push({
+                    idarticulo : me.idarticulo,
+                    articulo : me.idarticulo,
+                    cantidad : me.cantidad,
+                    precio : me.precio
+                });
             },
             abrirModal(modelo, accion, data =[]){
                 this.selectRol();

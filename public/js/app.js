@@ -3598,7 +3598,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       total: '',
       arrayIngreso: '',
       arrayProveedor: [],
-      arrayDetalle: '',
+      arrayDetalle: [],
       listado: 1,
       modal: 0,
       tituloModal: '',
@@ -3717,6 +3717,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").de
       var me = this;
       me.pagination.current_page = page;
       me.listarIngreso(page, buscar, criterio);
+    },
+    agregarDetalle: function agregarDetalle() {
+      var me = this;
+      me.arrayDetalle.push({
+        idarticulo: me.idarticulo,
+        articulo: me.idarticulo,
+        cantidad: me.cantidad,
+        precio: me.precio
+      });
     },
     abrirModal: function abrirModal(modelo, accion) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -13953,7 +13962,23 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-success form-control btnagregar",
+                            on: {
+                              click: function($event) {
+                                return _vm.agregarDetalle()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon-plus" })]
+                        )
+                      ])
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row border" }, [
@@ -13965,7 +13990,7 @@ var render = function() {
                             "table table-bordered table-striped table-sm"
                         },
                         [
-                          _vm._m(3),
+                          _vm._m(2),
                           _vm._v(" "),
                           _vm.arrayDetalle.length
                             ? _c(
@@ -13973,7 +13998,7 @@ var render = function() {
                                 [
                                   _vm._l(_vm.arrayDetalle, function(detalle) {
                                     return _c("tr", { key: detalle.id }, [
-                                      _vm._m(4, true),
+                                      _vm._m(3, true),
                                       _vm._v(" "),
                                       _c("td", {
                                         domProps: {
@@ -14041,25 +14066,24 @@ var render = function() {
                                         _vm._v(
                                           " " +
                                             _vm._s(
-                                              _vm.deatalle.precio *
-                                                detalle.cantidad
+                                              detalle.precio * detalle.cantidad
                                             )
                                         )
                                       ])
                                     ])
                                   }),
                                   _vm._v(" "),
+                                  _vm._m(4),
+                                  _vm._v(" "),
                                   _vm._m(5),
                                   _vm._v(" "),
-                                  _vm._m(6),
-                                  _vm._v(" "),
-                                  _vm._m(7)
+                                  _vm._m(6)
                                 ],
                                 2
                               )
                             : _c("tbody", [
                                 _c("td", { attrs: { colspan: "5" } }, [
-                                  _vm._v("NO HAY ARTICULOS AGREGADOS∫")
+                                  _vm._v("NO HAY ARTICULOS AGREGADOS")
                                 ])
                               ])
                         ]
@@ -14249,20 +14273,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Impuestos")]),
         _vm._v(" "),
         _c("th", [_vm._v("Estado")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success form-control btnagregar" },
-          [_c("i", { staticClass: "icon-plus" })]
-        )
       ])
     ])
   },
