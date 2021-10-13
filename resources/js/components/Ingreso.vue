@@ -136,7 +136,7 @@
                 <div class="form-group row border">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Artículo</label>
+                            <label for="">Artículo <span style="color:red" v-show="idarticulo==0">(* Seleccione)</span> </label>
                             <div class="form-inline">
                                 <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarArticulo()" placeholder="Ingrese Articulo">
                                 <button class="btn btn-primary">...</button>
@@ -146,13 +146,13 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Precio</label>
+                            <label for="">Precio <span style="color:red" v-show="precio==0"> (*Ingrese)</span> </label>
                             <input type="text" value="0" step="any" class="form-control" v-model="precio">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Cantidad</label>
+                            <label for="">Cantidad <span style="color:red" v-show="cantidad==0" >(*Ingrese)</span></label>
                             <input type="number" value="0" class="form-control" v-model="cantidad">
                         </div>
                     </div>
@@ -388,14 +388,51 @@ import vSelect from 'vue-select'
                 me.pagination.current_page = page;
                 me.listarIngreso(page,buscar,criterio);
             },
+            encuentra(id){
+                var sw = false;
+                for (let index = 0; index < this.arrayDetalle.length; index++) {
+                    if(this.arrayDetalle[index].idarticulo == id){
+                        sw = true;
+                    }
+                }
+                return sw;
+            },
             agregarDetalle(){
                 let me = this;
-                me.arrayDetalle.push({
-                    idarticulo : me.idarticulo,
-                    articulo : me.idarticulo,
-                    cantidad : me.cantidad,
-                    precio : me.precio
-                });
+                if(me.idarticulo == 0 || me.cantidad == 0 || me.precio == 0){
+
+                }else{
+                    if(me.encuentra(me.idarticulo)){ 
+                        //alert("sorprise MDFKR");
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                                cancelButton: 'btn btn-danger'
+                            },
+                            buttonsStyling: false
+                        })
+                        swalWithBootstrapButtons.fire(
+                            'Cancelar',
+                            'Este aarticulo ya se encuentra registrado',
+                            'error'
+                            );
+                    }else {
+                            me.arrayDetalle.push({
+                            idarticulo : me.idarticulo,
+                            articulo : me.idarticulo,
+                            cantidad : me.cantidad,
+                            precio : me.precio
+                        });
+                        me.codigo = "";
+                        me.idarticulo = 0;
+                        me.articulo = "";
+                        me.cantidad = 0;
+                        me.precio = 0;
+                    }
+                    
+
+                }
+                
             },
             abrirModal(modelo, accion, data =[]){
                 this.selectRol();
