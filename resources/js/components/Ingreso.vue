@@ -176,9 +176,9 @@
                                 </tr>
                             </thead>
                             <tbody v-if="arrayDetalle.length">
-                                <tr v-for="detalle in arrayDetalle" :key="detalle.id">
+                                <tr v-for="(detalle,index) in arrayDetalle" :key="detalle.id">
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm">
+                                        <button @click="eliminarDetalle(index)" type="button" class="btn btn-danger btn-sm">
                                             <i class="icon-close"></i>
                                         </button>
                                     </td>
@@ -433,6 +433,10 @@ import vSelect from 'vue-select'
 
                 }
                 
+            },
+            eliminarDetalle(id){
+                let me = this;
+                me.arrayDetalle.splice(id,1);
             },
             abrirModal(modelo, accion, data =[]){
                 this.selectRol();
