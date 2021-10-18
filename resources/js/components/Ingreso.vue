@@ -193,15 +193,15 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="right"><strong>Total parcial</strong></td>
-                                    <td> 1 </td>
+                                    <td>$ {{totalParcial = (total - totalImpuesto).toFixed(2) }} </td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="right"><strong>Total Impuesto</strong></td>
-                                    <td> 2 </td>
+                                    <td>$ {{totalImpuesto = ((total*impuesto)/(1+impuesto)).toFixed(2) }} </td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="right"><strong>Total neto</strong></td>
-                                    <td> 3 </td>
+                                    <td>$ {{total=calcularTotal}} </td>
                                 </tr>
                             </tbody>
                             <tbody v-else>
@@ -265,7 +265,9 @@ import vSelect from 'vue-select'
                 serie_comprobante : '',
                 num_comprobante : '',
                 impuesto: '0.16',
-                total : '',
+                total : 0.0,
+                totalImpuesto : 0.0,
+                totalParcial : 0.0,
                 arrayIngreso : '',
                 arrayProveedor : [],
                 arrayDetalle : [],
@@ -323,6 +325,14 @@ import vSelect from 'vue-select'
                     from ++;
                 }
                 return pagesArray;
+            },
+            calcularTotal: function(){
+                var resultado = 0;
+                for (let i = 0; i < this.arrayDetalle.length; i++) {
+                    resultado = resultado+(this.arrayDetalle[i].precio * this.arrayDetalle[i].cantidad);
+                    
+                }
+                return resultado;
             }
         },
         methods : {
@@ -419,7 +429,7 @@ import vSelect from 'vue-select'
                     }else {
                             me.arrayDetalle.push({
                             idarticulo : me.idarticulo,
-                            articulo : me.idarticulo,
+                            articulo : me.articulo,
                             cantidad : me.cantidad,
                             precio : me.precio
                         });
