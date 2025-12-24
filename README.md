@@ -7,17 +7,7 @@
 ![PHP](https://img.shields.io/badge/PHP-8.0-777BB4?style=for-the-badge&logo=php)
 
 
-Bienvenido a este repositorio, creado con el propósito de documentar, estructurar y consolidar los conocimientos adquiridos durante el desarrollo de un sistema de Punto de Ventas (POS) utilizando Laravel como backend principal y tecnologías modernas orientadas a la comunicación en tiempo real y procesos asíncronos.
-
-Este proyecto funciona como una guía práctica de referencia y como un recurso educativo para comprender cómo construir aplicaciones robustas, escalables y desacopladas, aplicando buenas prácticas de desarrollo profesional.
-
----
-
-### 📌 ¿Por qué en español?
-
-Este material está escrito en español debido a la limitada documentación detallada y contextualizada en este idioma sobre arquitecturas asíncronas en Laravel, especialmente cuando se integran tecnologías como Laravel Echo, Pusher, Vue.js y Axios.
-
-El objetivo es reducir la barrera de entrada y facilitar el aprendizaje a desarrolladores que prefieren comprender los conceptos técnicos en su lengua materna.
+Bienvenido a este repositorio, creado para el desarrollo de un sistema de Punto de Ventas (POS) utilizando Laravel como backend principal y tecnologías orientadas a la comunicación en tiempo real y procesos asíncronos.
 
 ---
 
@@ -41,20 +31,6 @@ En este repositorio se abordan los aspectos clave para el desarrollo de un siste
 	•	Configuración de entornos (Docker, variables de entorno, etc.).
 	•	Etc…
 
----
-
-### ✨ ¿Cuál es el objetivo?
-
-El objetivo principal de este repositorio es servir como un punto de referencia claro, práctico y confiable para desarrolladores que deseen:
-	•	Aprender Laravel en un contexto realista.
-	•	Entender cómo funcionan los sistemas asíncronos.
-	•	Implementar eventos y notificaciones en tiempo real.
-	•	Construir un POS moderno, reactivo y escalable.
-	•	Aplicar patrones y buenas prácticas utilizadas en proyectos profesionales.
-
-Este proyecto no pretende ser solo un tutorial, sino una base sólida de conocimiento que pueda evolucionar y adaptarse a escenarios reales de producción.
-
-⸻
 
 ¡Gracias por visitar este repositorio y por compartir la pasión por aprender, construir y mejorar continuamente! 🚀
 
