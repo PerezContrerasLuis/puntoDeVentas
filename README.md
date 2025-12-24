@@ -7,8 +7,6 @@
 ![PHP](https://img.shields.io/badge/PHP-8.0-777BB4?style=for-the-badge&logo=php)
 
 
-# Laravel – Guía de Desarrollo de un Sistema Punto de Ventas Asíncrono
-
 Bienvenido a este repositorio, creado con el propósito de documentar, estructurar y consolidar los conocimientos adquiridos durante el desarrollo de un sistema de Punto de Ventas (POS) utilizando Laravel como backend principal y tecnologías modernas orientadas a la comunicación en tiempo real y procesos asíncronos.
 
 Este proyecto funciona como una guía práctica de referencia y como un recurso educativo para comprender cómo construir aplicaciones robustas, escalables y desacopladas, aplicando buenas prácticas de desarrollo profesional.
@@ -254,6 +252,22 @@ docker-compose exec mysql mysql -u root -p
 
 # Ver logs de aplicación
 docker-compose exec php tail -f storage/logs/laravel.log
+
+# Reiniciar servicios específicos
+docker-compose restart nginx php mysql
+
+# Ver logs de un servicio
+docker-compose logs nginx
+docker-compose logs php
+docker-compose logs mysql
+
+# Acceder a MySQL
+docker-compose exec mysql mysql -u root -p
+# Contraseña: root_password
+
+# Reinstalar dependencias
+docker-compose exec php composer install
+docker-compose exec node npm install
 ```
 
 ### Gestión de Contenedores
@@ -273,6 +287,17 @@ docker-compose stats
 
 # Reconstruir un servicio específico
 docker-compose up -d --build php
+
+# Resumen facil 
+
+| comando              | Qué hace                                            |
+|----------------------|-----------------------------------------------------|
+| docker-compose up    | Crea y arranca servicios                            |
+| docker-compose up -d | Igual, pero en background                           |
+| docker-compose stop  | Apaga contenedores                                  |
+| docker-compose start | Enciende contenedores existentes.                   |
+| docker-compose down  | Apaga y elimina contenedores                        |
+
 ```
 
 ## 🌐 Acceso a los Servicios
@@ -282,6 +307,9 @@ docker-compose up -d --build php
 | **Aplicación Laravel** | http://localhost:8080 | - |
 | **phpMyAdmin** | http://localhost:8081 | Usuario: `root`<br>Contraseña: `root_password` |
 | **MySQL Directo** | localhost:3306 | Usuario: `root`<br>Contraseña: `root_password` |
+
+
+
 
 ## 📁 Estructura del Proyecto
 
@@ -361,6 +389,23 @@ nginx:
     - "8082:80"  # Cambiar a puerto disponible
 ```
 
+# Notas importantes:
+Sincronización de archivos: Tus cambios en ~/Proyectos/puntoDeVentas se reflejarán automáticamente en el contenedor gracias al volumen mapeado.
+
+Base de datos persistente: Los datos de MySQL se guardan en un volumen llamado db_data.
+
+Si tienes problemas de permisos: Ejecuta desde tu máquina local:
+
+```bash
+sudo chown -R $USER:www-data storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
+```
+Si el proyecto usa Redis o Memcached: Necesitarás agregar esos servicios al docker-compose.yml.
+
+Para producción: Deberías modificar las configuraciones (especialmente contraseñas y APP_DEBUG=false).
+
+Si necesitas cambiar puertos: Modifica los puertos en la sección ports del docker-compose.yml.
+
 ## 🤝 Contribuir
 
 1. Fork el proyecto
@@ -375,7 +420,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👥 Autores
 
-- **Tu Nombre** - *Desarrollo inicial* - [@tuusuario](https://github.com/tuusuario)
+- **Luis Pérez Contreras** - *Desarrollo inicial* - [@PerezContrerasLuis](https://github.com/PerezContrerasLuis)
 
 ## 🙏 Agradecimientos
 
